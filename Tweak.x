@@ -283,11 +283,28 @@ static DLWindow *gWindow;
 static DLOverlay *gOverlay;
 static int gToken;
 
-static void DLStart(void) {
+static UIWindowScene *DLScene(void) {
+    for (UIScene *s in UIApplication.sharedApplication.connectedScenes) {
+        if ([s isKindOfClass:[UIWindowScene class]]) return (UIWindowScene *)s;
+    }
+    return nil;
+}
+
+static void DLStart(int attempt) {
     if (gWindow) return;
+
+    UIWindowScene *sc = DLScene();
+    if (!sc && attempt < 6) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC),
+                       dispatch_get_main_queue(), ^{ DLStart(attempt + 1); });
+        return;
+    }
+
     LoadPrefs();
 
-    gWindow = [[DLWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    if (sc) gWindow = [[DLWindow alloc] initWithWindowScene:sc];
+    else    gWindow = [[DLWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    gWindow.frame = UIScreen.mainScreen.bounds;
     gWindow.windowLevel = UIWindowLevelStatusBar + 1000000;
     gWindow.backgroundColor = UIColor.clearColor;
     gWindow.userInteractionEnabled = NO;
@@ -296,12 +313,13 @@ static void DLStart(void) {
     UIViewController *vc = [UIViewController new];
     vc.view.backgroundColor = UIColor.clearColor;
     vc.view.userInteractionEnabled = NO;
+    vc.view.frame = UIScreen.mainScreen.bounds;
     gWindow.rootViewController = vc;
 
-    vc.view.frame = UIScreen.mainScreen.bounds;
     gOverlay = [[DLOverlay alloc] initWithFrame:UIScreen.mainScreen.bounds];
     [vc.view addSubview:gOverlay];
     gWindow.hidden = NO;
+    [gWindow makeKeyAndVisible];
     [gOverlay rebuild];
 
     notify_register_dispatch("com.jamal.deadlcd/prefschanged", &gToken,
@@ -314,11 +332,11 @@ static void DLStart(void) {
 %hook SpringBoard
 - (void)applicationDidFinishLaunching:(id)application {
     %orig;
-    dispatch_async(dispatch_get_main_queue(), ^{ DLStart(); });
+    dispatch_async(dispatch_get_main_queue(), ^{ DLStart(0); });
 }
 %end
 
 %ctor {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 8 * NSEC_PER_SEC),
-                   dispatch_get_main_queue(), ^{ DLStart(); });
+                   dispatch_get_main_queue(), ^{ DLStart(0); });
 }
