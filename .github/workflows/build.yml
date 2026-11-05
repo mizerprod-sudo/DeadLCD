@@ -1,0 +1,42 @@
+name: Build DeadLCD
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tools
+        run: brew install ldid dpkg
+
+      - name: Install Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git "$HOME/theos"
+          git clone --depth=1 --filter=blob:none --sparse https://github.com/theos/sdks.git /tmp/sdks
+          cd /tmp/sdks
+          git sparse-checkout set iPhoneOS14.5.sdk
+          mv iPhoneOS14.5.sdk "$HOME/theos/sdks/"
+
+      - name: Build
+        run: |
+          export THEOS="$HOME/theos"
+          make package FINALPACKAGE=1
+          ls -la packages
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: DeadLCD-deb
+          path: packages/*.deb
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "build-${{ github.run_number }}" packages/*.deb \
+            --title "DeadLCD build ${{ github.run_number }}" \
+            --notes "DeadLCD 1.0.0 rootless"
