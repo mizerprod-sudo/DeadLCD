@@ -319,7 +319,6 @@ static void DLStart(int attempt) {
     gOverlay = [[DLOverlay alloc] initWithFrame:UIScreen.mainScreen.bounds];
     [vc.view addSubview:gOverlay];
     gWindow.hidden = NO;
-    [gWindow makeKeyAndVisible];
     [gOverlay rebuild];
 
     notify_register_dispatch("com.jamal.deadlcd/prefschanged", &gToken,
