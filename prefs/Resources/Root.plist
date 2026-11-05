@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>DeadLCD</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key><string>PSGroupCell</string>
+			<key>label</key><string>Main</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Enable DeadLCD</string>
+			<key>key</key><string>enabled</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSGroupCell</string>
+			<key>label</key><string>Effects</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Vertical Lines</string>
+			<key>key</key><string>vlines</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Horizontal Glitch</string>
+			<key>key</key><string>hglitch</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Screen Flicker</string>
+			<key>key</key><string>flicker</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>RGB Distortion</string>
+			<key>key</key><string>rgb</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Dead Pixels</string>
+			<key>key</key><string>dead</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSwitchCell</string>
+			<key>label</key><string>Random Glitches</string>
+			<key>key</key><string>random</string>
+			<key>default</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSGroupCell</string>
+			<key>label</key><string>Intensity</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSliderCell</string>
+			<key>key</key><string>intensity</string>
+			<key>default</key><real>0.5</real>
+			<key>min</key><real>0.05</real>
+			<key>max</key><real>1.0</real>
+			<key>showValue</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSGroupCell</string>
+			<key>label</key><string>Glitch Frequency</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSSliderCell</string>
+			<key>key</key><string>frequency</string>
+			<key>default</key><real>0.4</real>
+			<key>min</key><real>0.0</real>
+			<key>max</key><real>1.0</real>
+			<key>showValue</key><true/>
+			<key>defaults</key><string>com.jamal.deadlcd</string>
+			<key>PostNotification</key><string>com.jamal.deadlcd/prefschanged</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key><string>PSButtonCell</string>
+			<key>label</key><string>Reset Settings</string>
+			<key>action</key><string>resetSettings</string>
+			<key>isDestructive</key><true/>
+		</dict>
+	</array>
+</dict>
+</plist>
