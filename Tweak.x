@@ -298,7 +298,8 @@ static void DLStart(void) {
     vc.view.userInteractionEnabled = NO;
     gWindow.rootViewController = vc;
 
-    gOverlay = [[DLOverlay alloc] initWithFrame:vc.view.bounds];
+    vc.view.frame = UIScreen.mainScreen.bounds;
+    gOverlay = [[DLOverlay alloc] initWithFrame:UIScreen.mainScreen.bounds];
     [vc.view addSubview:gOverlay];
     gWindow.hidden = NO;
     [gOverlay rebuild];
@@ -316,3 +317,8 @@ static void DLStart(void) {
     dispatch_async(dispatch_get_main_queue(), ^{ DLStart(); });
 }
 %end
+
+%ctor {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 8 * NSEC_PER_SEC),
+                   dispatch_get_main_queue(), ^{ DLStart(); });
+}
