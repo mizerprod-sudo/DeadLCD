@@ -2,14 +2,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import <notify.h>
 
-#define DOMAIN CFSTR("com.jamal.deadlcd")
+#define DL_DOMAIN CFSTR("com.jamal.deadlcd")
 
 static BOOL gEnabled, gVLines, gHGlitch, gFlicker, gRGB, gDead, gRandom;
 static CGFloat gI = 0.5, gF = 0.4;
 
 static BOOL PBool(CFStringRef key, BOOL def) {
     BOOL r = def;
-    CFPropertyListRef v = CFPreferencesCopyAppValue(key, DOMAIN);
+    CFPropertyListRef v = CFPreferencesCopyAppValue(key, DL_DOMAIN);
     if (v) {
         if (CFGetTypeID(v) == CFBooleanGetTypeID()) {
             r = CFBooleanGetValue((CFBooleanRef)v);
@@ -25,7 +25,7 @@ static BOOL PBool(CFStringRef key, BOOL def) {
 
 static CGFloat PFloat(CFStringRef key, CGFloat def) {
     CGFloat r = def;
-    CFPropertyListRef v = CFPreferencesCopyAppValue(key, DOMAIN);
+    CFPropertyListRef v = CFPreferencesCopyAppValue(key, DL_DOMAIN);
     if (v) {
         if (CFGetTypeID(v) == CFNumberGetTypeID()) {
             double d = def;
@@ -38,7 +38,7 @@ static CGFloat PFloat(CFStringRef key, CGFloat def) {
 }
 
 static void LoadPrefs(void) {
-    CFPreferencesAppSynchronize(DOMAIN);
+    CFPreferencesAppSynchronize(DL_DOMAIN);
     gEnabled  = PBool(CFSTR("enabled"), YES);
     gVLines   = PBool(CFSTR("vlines"), YES);
     gHGlitch  = PBool(CFSTR("hglitch"), YES);
