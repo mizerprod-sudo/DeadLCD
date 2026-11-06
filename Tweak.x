@@ -268,6 +268,7 @@ static UIColor *PrimColor(CGFloat a) {
 
 @interface UIWindow (DL)
 - (void)_setSecure:(BOOL)secure;
+- (void)_setIgnoresHitTest:(BOOL)ignore;
 @end
 
 @interface DLWindow : UIWindow
@@ -319,6 +320,7 @@ static void DLStart(int attempt) {
     gOverlay = [[DLOverlay alloc] initWithFrame:UIScreen.mainScreen.bounds];
     [vc.view addSubview:gOverlay];
     gWindow.hidden = NO;
+    if ([gWindow respondsToSelector:@selector(_setIgnoresHitTest:)]) [gWindow _setIgnoresHitTest:YES];
     [gOverlay rebuild];
 
     notify_register_dispatch("com.jamal.deadlcd/prefschanged", &gToken,
